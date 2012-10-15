@@ -151,16 +151,21 @@ var Form = Backbone.View.extend({
     switch (event) {
       case 'change':
         this.trigger('change', this);
+        this.trigger('*:change', this, editor);
         break;
 
       case 'focus':
-        if (!this.hasFocus) this.trigger('focus', this);
+        if (!this.hasFocus) {
+			this.trigger('focus', this);
+			this.trigger('*:focus', this, editor);
+		}
         break;
 
       case 'blur':
         if (this.hasFocus) {
           //TODO: Is the timeout etc needed?
           var self = this;
+          self.trigger('*:blur', self, editor);
           setTimeout(function() {
             var focusedField = _.find(self.fields, function(field) {
               return field.editor.hasFocus;

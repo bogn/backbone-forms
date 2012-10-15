@@ -369,6 +369,22 @@ test('triggers editor events on the form, prefixed with the key name', function(
   same(editorArg, editor);
 });
 
+test("'change'/'focus'/'blur' events generically bubble up from editors", function() {
+	var form = new Form(),
+        editor = new Form.Editor({ key: 'title' });
+
+    var spy = this.sinon.spy();
+
+    form.on('*:change *:focus *:blur', spy);
+
+	form.handleEditorEvent('focus', editor);
+	form.handleEditorEvent('change', editor);
+	form.handleEditorEvent('blur', editor);
+
+    ok(spy.callCount == 3);
+    ok(spy.calledWith(form, editor));
+});
+
 test('triggers general form events', function() {
   var form = new Form(),
       editor = new Form.Editor({ key: 'title' });
