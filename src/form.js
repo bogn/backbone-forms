@@ -142,9 +142,9 @@ var Form = Backbone.View.extend({
 
       case 'focus':
         if (!this.hasFocus) {
-			this.trigger('focus', this);
-			this.trigger('*:focus', this, editor);
-		}
+          this.trigger('focus', this);
+          this.trigger('*:focus', this, editor);
+        }
         break;
 
       case 'blur':
